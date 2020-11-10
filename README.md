@@ -1,6 +1,6 @@
 # diagramview显示图表的自定义view
 - 最近无事，就写了一个竖状图以及连点成线图
- 如图：![Image text](image/diagramview-1.png)
+ 如图：![Image text](/image/diagramview-1.png)
 
 ## diagramview的使用
 - xml下的使用
@@ -19,13 +19,13 @@
             android:background="@color/lust"/>
 
 - 代码中使用需要用到适配器
-   ～～～
+   ```
    DiagramView diagramView = findViewById(R.id.diagramView);
    ShuzhuangAdapter adapter = new ShuzhuangAdapter(getList());
    diagramView.setAdapter(adapter);
-   ～～～
+   ```
    这个getList是我随意使用的数据
-   ～～～
+   ```
    private List<XcellBean> getList(){
         List<XcellBean> beanList = new ArrayList<>();
         XcellBean xcellBean = new XcellBean("2004", 100);
@@ -42,9 +42,9 @@
         beanList.add(xcellBean5);
         return beanList;
     }
-   ～～～
+   ```
    XcellBean其实是随意的，这里面都有你自己定义
-   ～～～
+   ```
    public class XcellBean {
         private String nian;
         private float renkou;
@@ -85,10 +85,10 @@
             this.rate = rate;
         }
     }
-   ～～～
+   ```
 
    这里就是适配器了
-   ～～～
+   ```
     private class ShuzhuangAdapter extends DiagramView.Adapter{
 
         private List<XcellBean> mBeanList;
@@ -152,4 +152,4 @@
             return mBeanList.get(position).getRenkou();
         }
     }
-    ～～～
+    ```
