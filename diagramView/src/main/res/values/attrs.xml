@@ -8,6 +8,8 @@
         <attr name="xAxisSurplus" format="float"/>
         <attr name="yAxisSurplus" format="float"/>
         <attr name="hasArrows" format="boolean"/>
+        <attr name="yAxisColor" format="color"/>
+        <attr name="xAxisColor" format="color"/>
         <attr name="yAxisTextSize" format="integer"/>
         <attr name="xAxisTextSize" format="integer"/>
         <attr name="yAxisTextColor" format="color"/>
@@ -20,7 +22,8 @@
             <enum name="dottedLine" value="0"/>
             <enum name="fullLine" value="1"/>
         </attr>
-
-        <attr name="axisNum" format="integer"/>
+        <attr name="rightYAxisColor" format="color"/>
+        <attr name="rightYAxisTextSize" format="integer"/>
+        <attr name="rightYAxisTextColor" format="color"/>
     </declare-styleable>
 </resources>
