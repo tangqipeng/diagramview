@@ -1,0 +1,3 @@
+include ':diagramView'
+include ':app'
+rootProject.name = "DiagramView"

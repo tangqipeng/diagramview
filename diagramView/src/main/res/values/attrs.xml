@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DiagramView">
+        <attr name="paddingLeft" format="dimension"/>
+        <attr name="paddingRight" format="dimension"/>
+        <attr name="paddingTop" format="dimension"/>
+        <attr name="paddingBottom" format="dimension"/>
+        <attr name="xAxisSurplus" format="float"/>
+        <attr name="yAxisSurplus" format="float"/>
+        <attr name="hasArrows" format="boolean"/>
+        <attr name="yAxisTextSize" format="integer"/>
+        <attr name="xAxisTextSize" format="integer"/>
+        <attr name="yAxisTextColor" format="color"/>
+        <attr name="xAxisTextColor" format="color"/>
+        <attr name="yAxisVisible">
+            <enum name="visible" value="0"/>
+            <enum name="invisible" value="1"/>
+        </attr>
+        <attr name="yAxisCellLine">
+            <enum name="dottedLine" value="0"/>
+            <enum name="fullLine" value="1"/>
+        </attr>
+
+        <attr name="axisNum" format="integer"/>
+    </declare-styleable>
+</resources>
