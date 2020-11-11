@@ -1,5 +1,6 @@
 # diagramview显示图表的自定义view
 - 最近无事，就写了一个竖状图以及连点成线图
+ ![Image text](https://github.com/tangqipeng/diagramview/blob/main/image/diagramview-1.png)
  ![Image text](image/diagramview-1.png)
  ![Image text](image/diagramview-2.png)
  ![Image text](image/diagramview-3.png)
