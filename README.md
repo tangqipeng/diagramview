@@ -1,7 +1,11 @@
 # diagramview显示图表的自定义view
 - 最近无事，就写了一个竖状图以及连点成线图
- 如图：
-![Image text](/image/diagramview-1.png)
+ ![Image text](image/diagramview-1.png)
+ ![Image text](image/diagramview-2.png)
+ ![Image text](image/diagramview-3.png)
+ ![Image text](image/diagramview-4.png)
+ ![Image text](image/diagramview-5.png)
+ ![Image text](image/diagramview-6.png)
 
 ## diagramview的使用
 - xml下的使用
@@ -90,7 +94,7 @@
     }
    ```
 
-   这里就是适配器了
+- 这里就是适配器了
    ```
     private class ShuzhuangAdapter extends DiagramView.Adapter{
 
