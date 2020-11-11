@@ -2,6 +2,8 @@ package com.tqp.diagramview;
 
 import android.graphics.Canvas;
 
+import androidx.annotation.ColorRes;
+
 import com.tqp.diagramview.exception.DiagramException;
 
 /**
@@ -24,6 +26,9 @@ public interface RightYAxisListener {
     int getRightYAxleBaseCellSegmentationNum();
 
     float getRightCellValue(int type, int position);
+
+    @ColorRes
+    int getRightItemColor(int type);
 
     void drawCell(Canvas canvas);
 

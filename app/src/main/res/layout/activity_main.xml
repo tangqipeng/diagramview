@@ -134,6 +134,81 @@
             app:xAxisTextColor="@color/romance"
             app:yAxisTextColor="@color/romance"
             android:background="@color/colorAccent"/>
+
+        <com.tqp.diagramview.DiagramView
+            android:id="@+id/diagramView8"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="@dimen/dp_10"
+            app:paddingLeft="@dimen/dp_10"
+            app:paddingRight="@dimen/dp_10"
+            app:paddingTop="@dimen/dp_10"
+            app:paddingBottom="@dimen/dp_10"
+            app:yAxisTextSize="20"
+            app:xAxisTextSize="20"
+            app:hasArrows="false"
+            app:rightYAxisTextColor="@color/romance"
+            app:rightYAxisTextSize="20"
+            app:xAxisTextColor="@color/romance"
+            app:yAxisTextColor="@color/romance"
+            android:background="@color/turkish_rose"/>
+
+        <com.tqp.diagramview.DiagramView
+            android:id="@+id/diagramView9"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="@dimen/dp_10"
+            app:paddingLeft="@dimen/dp_10"
+            app:paddingRight="@dimen/dp_10"
+            app:paddingTop="@dimen/dp_10"
+            app:paddingBottom="@dimen/dp_10"
+            app:yAxisTextSize="20"
+            app:xAxisTextSize="20"
+            app:hasArrows="false"
+            app:rightYAxisColor="@color/lust"
+            app:rightYAxisTextColor="@color/romance"
+            app:rightYAxisTextSize="20"
+            app:xAxisTextColor="@color/romance"
+            app:yAxisTextColor="@color/romance"
+            android:background="@color/turkish_rose"/>
+
+        <com.tqp.diagramview.DiagramView
+            android:id="@+id/diagramView10"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="@dimen/dp_10"
+            app:paddingLeft="@dimen/dp_10"
+            app:paddingRight="@dimen/dp_10"
+            app:paddingTop="@dimen/dp_10"
+            app:paddingBottom="@dimen/dp_10"
+            app:yAxisTextSize="20"
+            app:xAxisTextSize="20"
+            app:hasArrows="false"
+            app:rightYAxisColor="@color/lust"
+            app:rightYAxisTextColor="@color/lust"
+            app:rightYAxisTextSize="20"
+            app:yAxisVisible="invisible"
+            app:xAxisTextColor="@color/romance"
+            app:yAxisTextColor="@color/romance"
+            android:background="@color/turkish_rose"/>
+
+        <com.tqp.diagramview.DiagramView
+            android:id="@+id/diagramView11"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="@dimen/dp_10"
+            app:paddingLeft="@dimen/dp_10"
+            app:paddingRight="@dimen/dp_10"
+            app:paddingTop="@dimen/dp_10"
+            app:paddingBottom="@dimen/dp_10"
+            app:yAxisTextSize="20"
+            app:xAxisTextSize="20"
+            app:hasArrows="false"
+            app:rightYAxisTextColor="@color/romance"
+            app:rightYAxisTextSize="20"
+            app:xAxisTextColor="@color/romance"
+            app:yAxisTextColor="@color/romance"
+            android:background="@color/turkish_rose"/>
     </LinearLayout>
 
 </ScrollView>
