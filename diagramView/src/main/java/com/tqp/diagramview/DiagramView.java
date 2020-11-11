@@ -78,13 +78,11 @@ public class DiagramView extends View {
     private float offsetX = 0f;//x轴的偏移量
 
     private float mCellYSmallPix = 0f;//y值每单元值
-    private int mCellYSmallValue = 0;//y轴每一小格代表的值
     private float mCellYPix = 0f;//y轴每等份的长度
 
     private Paint mDottedLinePaint;//虚线paint
 
     private float mRightCellYSmallPix = 0f;//右侧y值每单元值
-    private int mRightCellYSmallValue = 0;//右侧y轴每一小格代表的值
     private float mRightCellYPix = 0f;//右侧y轴每等份的长度
 
     private float mCellXPix = 0f;//x轴每等份的长度
@@ -223,8 +221,6 @@ public class DiagramView extends View {
         }
         mCellYSmallPix = mCellYPix / mAdapter.getYAxleBaseCellSegmentationNum();
 
-        mCellYSmallValue = mAdapter.getYAxleBaseCell() / mAdapter.getYAxleBaseCellSegmentationNum();
-
         if (mAdapter.openRightYAxle()) {
             if (mHasArrows && mYAxisSurplus == 0) {
                 mRightCellYPix = (axisHeight - mYAxisSurplus - 20) / mAdapter.getRightYAxleBaseCellNum();
@@ -232,8 +228,6 @@ public class DiagramView extends View {
                 mRightCellYPix = (axisHeight - mYAxisSurplus) / mAdapter.getRightYAxleBaseCellNum();
             }
             mRightCellYSmallPix = mRightCellYPix / mAdapter.getRightYAxleBaseCellSegmentationNum();
-
-            mRightCellYSmallValue = mAdapter.getRightYAxleBaseCell() / mAdapter.getRightYAxleBaseCellSegmentationNum();
         }
 
         offsetX = mAdapter.getItemWidth(0) / 2;
@@ -326,18 +320,18 @@ public class DiagramView extends View {
             if (mAdapter.openRightYAxle()) {
                 mRightItemPaint.setColor(getResources().getColor(mAdapter.getRightItemColor(j)));
                 rightYPath = new Path();
-                rightYPath.moveTo(mAxis_x + mCellXPix - offsetX, mAxis_y - adapter.getRightCellValue(j, 0) * mRightCellYSmallPix / mRightCellYSmallValue);
+                rightYPath.moveTo(mAxis_x + mCellXPix - offsetX, mAxis_y - adapter.getRightCellValue(j, 0) * mRightCellYSmallPix / mAdapter.getRightYAxleSmallestCell());
             }
             for (int i = 0; i < adapter.getItemCount(); i++) {
-                drawItem(canvas, mAxis_x + ((i + 1) * mCellXPix) - mItemsWidth / 2 + lastItemsWidth, mAxis_y - adapter.getItemHigh(j, i) * mCellYSmallPix / mCellYSmallValue, mAxis_x + ((i + 1) * mCellXPix) - mItemsWidth / 2 + lastItemsWidth + mAdapter.getItemWidth(j), mAxis_y);
+                drawItem(canvas, mAxis_x + ((i + 1) * mCellXPix) - mItemsWidth / 2 + lastItemsWidth, mAxis_y - adapter.getItemHigh(j, i) * mCellYSmallPix / mAdapter.getYAxleSmallestCell(), mAxis_x + ((i + 1) * mCellXPix) - mItemsWidth / 2 + lastItemsWidth + mAdapter.getItemWidth(j), mAxis_y);
 
                 if (mAdapter.openRightYAxle()) {
 
                     floats.add(mAxis_x + ((i + 1) * mCellXPix) - offsetX);
-                    floats.add(mAxis_y - adapter.getRightCellValue(j, i) * mRightCellYSmallPix / mRightCellYSmallValue);
+                    floats.add(mAxis_y - adapter.getRightCellValue(j, i) * mRightCellYSmallPix / mAdapter.getRightYAxleSmallestCell());
 
                     if (i > 0) {
-                        rightYPath.lineTo(mAxis_x + ((i + 1) * mCellXPix) - offsetX, mAxis_y - adapter.getRightCellValue(j, i) * mRightCellYSmallPix / mRightCellYSmallValue);
+                        rightYPath.lineTo(mAxis_x + ((i + 1) * mCellXPix) - offsetX, mAxis_y - adapter.getRightCellValue(j, i) * mRightCellYSmallPix / mAdapter.getRightYAxleSmallestCell());
                     }
                 }
             }
@@ -519,7 +513,7 @@ public class DiagramView extends View {
 
         @Override
         public int getRightYAxleSmallestCell() throws DiagramException {
-            return 0;
+            return getRightYAxleBaseCell()/getRightYAxleBaseCellSegmentationNum();
         }
 
         @Override

@@ -516,6 +516,11 @@ public class MainActivity extends AppCompatActivity {
 
     private static class LineOtherAdapter extends DiagramView.Adapter{
 
+        /**
+         * XcellBean只是一个对象，这是可变的，你用你自己的，传入的参数可以是List<T>也行，
+         * 只是下面的配置由你自己设置好就行。
+         * 我这里是List<List<T>>，是因为我这里是多组对比
+         */
         private final List<List<XcellBean>> mBeanList;
         private final static int china_type = 0;
         private final static int usa_type = 1;
@@ -524,41 +529,80 @@ public class MainActivity extends AppCompatActivity {
             this.mBeanList = beanList;
         }
 
+        /**
+         * 对比的组数，
+         * 如果你们只需要显示一组，你传入的参数是List<T>的话，你这里返回就写1，
+         * 当然你也可以List<List<T>>，那下面就不用变了
+         * @return
+         */
         @Override
         public int getTypeCount() {
             return mBeanList.size();
         }
 
+        /**
+         * 每组数组的个数，这里实际上是x轴的单元数
+         * @return
+         */
         @Override
         public int getItemCount() {
             return mBeanList.get(0).size();
         }
 
+        /**
+         * y轴上标有数值的基准长度，上图中左侧的y轴每隔几小格就标记了一个文字，
+         * 这里是返回有几个这样的标有文字的单元，那些没标数值的不要算，例如图1就是5格
+         * @return
+         */
         @Override
         public int getYAxleBaseCellNum() {
             return 10;
         }
 
+        /**
+         * 每一标有数值的单元格所代表的数值
+         * @return
+         */
         @Override
         public int getYAxleBaseCell() {
             return 10;
         }
 
+        /**
+         * 每一标有数值的单元格的数字所对应的文字
+         * @param position
+         * @return
+         */
         @Override
         public String getYAxleBaseCellText(int position) {
             return getYAxleBaseCell() * (position + 1) + "";
         }
 
+        /**
+         * 每一个基准单元格又分为几格，如果不再分割则返回1
+         * @return
+         */
         @Override
         public int getYAxleBaseCellSegmentationNum() {
             return 5;
         }
 
+        /**
+         * 你区分的type，实际上就是对比的每组数组的标识，
+         * 这里目前我好像漏掉了没啥用，但不影响显示，以后会完善
+         * @param position
+         * @return
+         */
         @Override
         public int getItemViewType(int position) {
             return position;
         }
 
+        /**
+         * 按type区分，每一组的竖状图的颜色
+         * @param type
+         * @return
+         */
         @Override
         public int getItemColor(int type) {
             if (type == china_type) {
@@ -568,58 +612,99 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        /**
+         * x轴所标记的文字
+         * @param position
+         * @return
+         */
         @Override
         public String getXAxisText(int position) {
             return mBeanList.get(0).get(position).getNian();
         }
 
-
+        /**
+         * x轴，每一组的竖状图的宽度，可以通过type来设置，如果都是一样宽，那就不需要区分
+         * @param type
+         * @return
+         */
         @Override
         public float getItemWidth(int type) {
             return 50f;
         }
 
+        /**
+         * 按type区分，每一组的每一个x单元的竖状图的峰值，是有多高
+         * @param type
+         * @param position
+         * @return
+         */
         @Override
         public float getItemHigh(int type, int position) {
             return mBeanList.get(type).get(position).getRenkou();
         }
 
+        /**
+         * 这里是是否显示右侧的y轴，适用于画点连线的图，默认是false，
+         * 这个方法不一定需要实现，如果启动右侧轴的话就实现，并返回true
+         * @return
+         */
         @Override
         public boolean openRightYAxle() {
             return true;
         }
 
-
+        /**
+         * 右侧轴的标有数值的基本单元分为几格
+         * @return
+         */
         @Override
         public int getRightYAxleBaseCellNum() {
             return 6;
         }
 
+        /**
+         * 右侧轴的标有数值的每一个基本单元所代表的数值
+         * @return
+         */
         @Override
         public int getRightYAxleBaseCell() {
             return 10;
         }
 
+        /**
+         * 右侧轴的标有数值的每一个基本单元对应的文字
+         * @return
+         */
         @Override
         public String getRightYAxleBaseCellText(int position) {
             return getRightYAxleBaseCell() * (position + 1) +"%";
         }
 
-        @Override
-        public int getRightYAxleSmallestCell() throws DiagramException {
-            return getRightYAxleBaseCell()/getRightYAxleBaseCellSegmentationNum();
-        }
-
+        /**
+         * 右侧轴的标有数值的每一个基本单元是否再分，不分则返回1
+         * @return
+         */
         @Override
         public int getRightYAxleBaseCellSegmentationNum() {
             return 5;
         }
 
+        /**
+         * 右侧轴标有数值的基本单元所对应的文字
+         * @param type
+         * @param position
+         * @return
+         */
         @Override
         public float getRightCellValue(int type, int position) {
             return mBeanList.get(type).get(position).getRate();
         }
 
+        /**
+         * 线形图根据type来区分颜色，如果只有一组那就没必要区分了
+         * @param type
+         * @return
+         */
         @Override
         public int getRightItemColor(int type) {
             if (type == china_type) {
