@@ -4,7 +4,7 @@
 
 ## diagramview的使用
 - xml下的使用
-```
+    ```
    <com.tqp.diagramview.DiagramView
             android:id="@+id/diagramView"
             android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             app:xAxisTextColor="@color/romance"
             app:yAxisTextColor="@color/romance"
             android:background="@color/lust"/>
-```
+    ```
 
 - 代码中使用需要用到适配器
    ```

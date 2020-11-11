@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static class MultiShuzhuangAdapter extends DiagramView.Adapter{
 
-        private List<List<XcellBean>> mBeanList;
+        private final List<List<XcellBean>> mBeanList;
         private final static int china_type = 0;
         private final static int usa_type = 1;
         private final static int japan_type = 2;
@@ -309,7 +309,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static class ShuzhuangAdapter extends DiagramView.Adapter{
 
-        private List<List<XcellBean>> mBeanList;
+        private final List<List<XcellBean>> mBeanList;
 
         public ShuzhuangAdapter(List<List<XcellBean>> beanList) {
             this.mBeanList = beanList;
@@ -393,7 +393,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public int getRightYAxleSmallestCell() throws DiagramException {
+        public int getRightYAxleSmallestCell() {
             return getRightYAxleBaseCell()/getRightYAxleBaseCellSegmentationNum();
         }
 
