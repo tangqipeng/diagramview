@@ -115,7 +115,7 @@
             app:xAxisTextSize="20"
             app:xAxisTextColor="@color/romance"
             app:yAxisTextColor="@color/romance"
-            android:background="@color/lust"/>
+            android:background="@color/sunglow"/>
 
         <com.tqp.diagramview.DiagramView
             android:id="@+id/diagramView7"

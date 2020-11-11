@@ -19,6 +19,9 @@ import androidx.annotation.Nullable;
 
 import com.tqp.diagramview.exception.DiagramException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author tangqipeng
  * @date 2020/11/6 2:05 PM
@@ -310,11 +313,15 @@ public class DiagramView extends View {
             canvas.drawLine(mAxis_x + ((i + 1) * mCellXPix) - offsetX, mAxis_y, mAxis_x + ((i + 1) * mCellXPix) - offsetX, mAxis_y - 10, mAxisPaint);
             canvas.drawText(adapter.getXAxisText(i), mAxis_x + ((i + 1) * mCellXPix) - mTextPaint.getTextSize() - offsetX, mAxis_y + mTextPaint.getTextSize() + 5, mTextPaint);
         }
+
+        List<List<Float>> typeList = new ArrayList<>();
+        List<Path> pathList = new ArrayList<>();
         float lastItemsWidth = 0f;
         for (int j = 0; j < adapter.getTypeCount(); j++) {
             if (mAdapter.getItemColor(j) == 0) {
                 throw new DiagramException("item的颜色值不能为0");
             }
+            List<Float> floats = new ArrayList<>();
             mItemPaint.setColor(getResources().getColor(mAdapter.getItemColor(j)));
             if (mAdapter.openRightYAxle()) {
                 mRightItemPaint.setColor(getResources().getColor(mAdapter.getRightItemColor(j)));
@@ -325,7 +332,10 @@ public class DiagramView extends View {
                 drawItem(canvas, mAxis_x + ((i + 1) * mCellXPix) - mItemsWidth / 2 + lastItemsWidth, mAxis_y - adapter.getItemHigh(j, i) * mCellYSmallPix / mCellYSmallValue, mAxis_x + ((i + 1) * mCellXPix) - mItemsWidth / 2 + lastItemsWidth + mAdapter.getItemWidth(j), mAxis_y);
 
                 if (mAdapter.openRightYAxle()) {
-                    canvas.drawPoint(mAxis_x + ((i + 1) * mCellXPix) - offsetX, mAxis_y - adapter.getRightCellValue(j, i) * mRightCellYSmallPix / mRightCellYSmallValue, mRightItemPaint);
+
+                    floats.add(mAxis_x + ((i + 1) * mCellXPix) - offsetX);
+                    floats.add(mAxis_y - adapter.getRightCellValue(j, i) * mRightCellYSmallPix / mRightCellYSmallValue);
+
                     if (i > 0) {
                         rightYPath.lineTo(mAxis_x + ((i + 1) * mCellXPix) - offsetX, mAxis_y - adapter.getRightCellValue(j, i) * mRightCellYSmallPix / mRightCellYSmallValue);
                     }
@@ -333,9 +343,24 @@ public class DiagramView extends View {
             }
             lastItemsWidth += mAdapter.getItemWidth(j);
             if (mAdapter.openRightYAxle()) {
-                mRightItemPaint.setStrokeWidth(4);
-                mRightItemPaint.setStyle(Paint.Style.STROKE);
-                canvas.drawPath(rightYPath, mRightItemPaint);
+                typeList.add(floats);
+                pathList.add(rightYPath);
+            }
+        }
+        if (mAdapter.openRightYAxle()) {
+            for (int j = 0; j < typeList.size(); j++) {
+                mRightItemPaint.setColor(getResources().getColor(mAdapter.getRightItemColor(j)));
+                float[] floats = new float[typeList.get(j).size()];
+                for (int i = 0; i < typeList.get(j).size(); i++) {
+                    floats[i] = typeList.get(j).get(i);
+                }
+                canvas.drawPoints(floats, mRightItemPaint);
+            }
+            mRightItemPaint.setStrokeWidth(4);
+            mRightItemPaint.setStyle(Paint.Style.STROKE);
+            for (int i = 0; i < pathList.size(); i++) {
+                mRightItemPaint.setColor(getResources().getColor(mAdapter.getRightItemColor(i)));
+                canvas.drawPath(pathList.get(i), mRightItemPaint);
             }
         }
         Log.i(TAG, "drawXCell");
