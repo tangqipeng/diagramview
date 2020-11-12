@@ -30,6 +30,4 @@ public interface RightYAxisListener {
     @ColorRes
     int getRightItemColor(int type);
 
-    void drawCell(Canvas canvas);
-
 }

@@ -394,37 +394,37 @@ public class DiagramView extends View {
         public abstract int getTypeCount();
 
         /**
-         * 每个item的个数
+         * 每组item的个数
          *
-         * @return
+         * @return 每组item的个数
          */
         public abstract int getItemCount();
 
         /**
-         * y轴的基本单元，（这是指标有数值的单元）
+         * y轴的基本单元数，（这是指标有数值的单元）
          *
-         * @return
+         * @return y轴的基本单元
          */
         public abstract int getYAxleBaseCellNum();
 
         /**
          * y轴的基本单元值
          *
-         * @return
+         * @return y轴的基本单元值
          */
         public abstract int getYAxleBaseCell();
 
         /**
          * y轴每个基本单元对应的数字
          *
-         * @return
+         * @return y轴每个基本单元对应的文字
          */
         public abstract String getYAxleBaseCellText(int position);
 
         /**
          * y轴的最小单元值，没标数值，<=getYAxleBaseCell()，
          *
-         * @return
+         * @return y轴的最小单元值 就是基本单元再分的小格值
          */
         public int getYAxleSmallestCell() throws DiagramException {
             if (getYAxleBaseCellSegmentationNum() < 0)
@@ -439,23 +439,23 @@ public class DiagramView extends View {
         /**
          * y轴的基本单元分成几段
          *
-         * @return
+         * @return y轴的基本单元分成几段
          */
         public abstract int getYAxleBaseCellSegmentationNum();
 
         /**
          *
-         * @param position
-         * @return
+         * @param position 根据position区分type组
+         * @return item的组数的区分
          */
         public int getItemViewType(int position) {
             return 0;
         }
 
         /**
-         * 每个竖状图的颜色
+         * 每组竖状图的颜色
          *
-         * @return
+         * @return 每组竖状图的颜色 根据type区分
          */
         @ColorRes
         public abstract int getItemColor(int type);
@@ -463,8 +463,8 @@ public class DiagramView extends View {
         /**
          * 竖状图的id
          *
-         * @param position
-         * @return
+         * @param position 每组item的位置
+         * @return 单组item的位置
          */
         public long getItemId(int position) {
             return NO_ID;
@@ -473,70 +473,103 @@ public class DiagramView extends View {
         /**
          * x轴每个单元对应的文字，文字都是一样的，选择一组即可
          *
-         * @param position
-         * @return
+         * @param position x轴对应的item的位置
+         * @return 返回对应位置的text
          */
         public abstract String getXAxisText(int position);
 
         /**
          * 获取Item的宽度
          *
-         * @return
+         * @return 每组item中的竖状图的宽度
          */
         public abstract float getItemWidth(int type);
 
         /**
          * 每个竖状图的高度
-         *
-         * @param position
-         * @return
+         * @param type 根据type区分竖状图组数
+         * @param position 每组的竖状图位置
+         * @return 每组竖状图的高度
          */
         public abstract float getItemHigh(int type, int position);
 
 
+        /**
+         * 是否显示右侧轴
+         * @return 是否显示右侧轴
+         */
         @Override
         public boolean openRightYAxle() {
             return false;
         }
 
+        /**
+         * 右侧轴的基本单元数
+         * @return 右侧轴的基本单元数
+         */
         @Override
         public int getRightYAxleBaseCellNum() {
             return 1;
         }
 
+        /**
+         * 右侧轴的基本单元所代表的值
+         * @return 右侧轴的基本单元所代表的值
+         */
         @Override
         public int getRightYAxleBaseCell() {
             return 1;
         }
 
+        /**
+         *
+         * @param position 右侧基本单元的位置
+         * @return 右侧基本单元对应的文字
+         */
         @Override
         public String getRightYAxleBaseCellText(int position) {
             return null;
         }
 
+        /**
+         *
+         * @return 右侧基本单元再分的每小段的值
+         * @throws DiagramException 抛出异常
+         */
         @Override
         public int getRightYAxleSmallestCell() throws DiagramException {
             return getRightYAxleBaseCell()/getRightYAxleBaseCellSegmentationNum();
         }
 
+        /**
+         * 右侧基本单元再分为几段
+         * @return 右侧基本单元再分为几段
+         */
         @Override
         public int getRightYAxleBaseCellSegmentationNum() {
             return 1;
         }
 
+        /**
+         * 根据type将数据分组，
+         * @param type item的type
+         * @param position 每组item对应的位置
+         * @return 返回的是每组item的每个位置的值，画点用
+         */
         @Override
         public float getRightCellValue(int type, int position) {
             return 0;
         }
 
+        /**
+         *
+         * @param type item的type
+         * @return 根据item的type来分别设置线条和点的颜色
+         */
         @Override
         public int getRightItemColor(int type) {
             return R.color.lust;
         }
 
-        @Override
-        public void drawCell(Canvas canvas) {
-
-        }
     }
 }

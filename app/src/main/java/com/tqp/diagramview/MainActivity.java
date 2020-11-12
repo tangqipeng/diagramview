@@ -494,7 +494,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public int getRightYAxleSmallestCell() throws DiagramException {
+        public int getRightYAxleSmallestCell() {
             return getRightYAxleBaseCell()/getRightYAxleBaseCellSegmentationNum();
         }
 
@@ -523,7 +523,6 @@ public class MainActivity extends AppCompatActivity {
          */
         private final List<List<XcellBean>> mBeanList;
         private final static int china_type = 0;
-        private final static int usa_type = 1;
 
         public LineOtherAdapter(List<List<XcellBean>> beanList) {
             this.mBeanList = beanList;
