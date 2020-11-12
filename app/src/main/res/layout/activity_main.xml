@@ -115,6 +115,8 @@
             app:paddingBottom="@dimen/dp_10"
             app:yAxisTextSize="20"
             app:xAxisTextSize="20"
+            app:xAxisSurplus="@dimen/dp_10"
+            app:yAxisSurplus="@dimen/dp_10"
             app:xAxisTextColor="@color/romance"
             app:yAxisTextColor="@color/romance"
             android:background="@color/sunglow"/>

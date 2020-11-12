@@ -75,6 +75,11 @@ public class DiagramView extends View {
      */
     private float mAxisY_end_Y = 0f;
 
+    /**
+     * 右侧纵轴的起点x
+     */
+    private float mRightAxisX = 0f;
+
     private float offsetX = 0f;//x轴的偏移量
 
     private float mCellYSmallPix = 0f;//y值每单元值
@@ -99,9 +104,8 @@ public class DiagramView extends View {
     public DiagramView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         TypedArray array = context.getTheme().obtainStyledAttributes(attrs, R.styleable.DiagramView, defStyleAttr, 0);
-
-        mXAxisSurplus = array.getFloat(R.styleable.DiagramView_xAxisSurplus, 0f);
-        mYAxisSurplus = array.getFloat(R.styleable.DiagramView_yAxisSurplus, 0f);
+        mXAxisSurplus = array.getDimension(R.styleable.DiagramView_xAxisSurplus, 0f);
+        mYAxisSurplus = array.getDimension(R.styleable.DiagramView_yAxisSurplus, 0f);
         mPaddingTop = array.getDimension(R.styleable.DiagramView_paddingTop, 0f);
         mPaddingBottom = array.getDimension(R.styleable.DiagramView_paddingBottom, 0f);
         mPaddingLeft = array.getDimension(R.styleable.DiagramView_paddingLeft, 0f);
@@ -140,6 +144,8 @@ public class DiagramView extends View {
         mRightItemPaint.setStrokeWidth(30f);
         mRightItemPaint.setStyle(Paint.Style.FILL);
 
+        Log.i("PPPPPP", "init()");
+
 
         // 虚线paint
         mDottedLinePaint = new Paint();
@@ -155,7 +161,8 @@ public class DiagramView extends View {
         if (adapter == null)
             return;
         this.mAdapter = adapter;
-        invalidate();
+        Log.i("PPPPPP", "setAdapter()");
+        requestLayout();
     }
 
     @Override
@@ -166,14 +173,21 @@ public class DiagramView extends View {
         Log.i(TAG, "diagramWidth is " + diagramWidth);
         Log.i(TAG, "diagramHeight is " + diagramHeight);
 
+        Log.i("PPPPPP", "onMeasure()");
+
+        mAxis_x = mPaddingLeft + 10;
+        mAxis_y = diagramHeight - mPaddingBottom - 10;
+        mAxisX_end_X = diagramWidth - 5 - mPaddingRight;
+        mAxisY_end_Y = 5 + mPaddingTop;
+
         if (mAdapter == null)
             return;
 
         mTextPaint.setTextSize(mYAxisTextSize);
         @SuppressLint("DrawAllocation") Rect yRect = new Rect();
         String text = "";
-        for (int i = 0; i < mAdapter.getYAxleBaseCellNum() - 1; i ++){
-            if (mAdapter.getYAxleBaseCellText(i).length() < mAdapter.getYAxleBaseCellText(i + 1).length()){
+        for (int i = 0; i < mAdapter.getYAxleBaseCellNum() - 1; i++) {
+            if (mAdapter.getYAxleBaseCellText(i).length() < mAdapter.getYAxleBaseCellText(i + 1).length()) {
                 text = mAdapter.getYAxleBaseCellText(i + 1);
             } else {
                 text = mAdapter.getYAxleBaseCellText(i);
@@ -183,20 +197,18 @@ public class DiagramView extends View {
         mTextPaint.getTextBounds(text, 0, text.length(), yRect);
         int width = yRect.width();
         Log.i(TAG, "width is " + width);
-        mAxis_x = mPaddingLeft + width + 10;
+        mAxis_x += width;
         Log.i(TAG, "mAxis_x is " + mAxis_x);
-        mTextPaint.setTextSize(mXAxisTextSize);
-        mAxis_y = diagramHeight - mPaddingBottom - mTextPaint.getTextSize() - 10;
 
-        mAxisX_end_X = diagramWidth - 5 - mPaddingRight;
-        mAxisY_end_Y = 5 + mPaddingTop;
+        mTextPaint.setTextSize(mXAxisTextSize);
+        mAxis_y -= mTextPaint.getTextSize();
 
         if (mAdapter.openRightYAxle()) {
             mTextPaint.setTextSize(mRightYAxisTextSize);
             @SuppressLint("DrawAllocation") Rect rightYRect = new Rect();
             String rightText = "";
-            for (int i = 0; i < mAdapter.getRightYAxleBaseCellNum() - 1; i ++){
-                if (mAdapter.getRightYAxleBaseCellText(i).length() < mAdapter.getRightYAxleBaseCellText(i + 1).length()){
+            for (int i = 0; i < mAdapter.getRightYAxleBaseCellNum() - 1; i++) {
+                if (mAdapter.getRightYAxleBaseCellText(i).length() < mAdapter.getRightYAxleBaseCellText(i + 1).length()) {
                     rightText = mAdapter.getRightYAxleBaseCellText(i + 1);
                 } else {
                     rightText = mAdapter.getRightYAxleBaseCellText(i);
@@ -215,26 +227,39 @@ public class DiagramView extends View {
             mItemsWidth += mAdapter.getItemWidth(i);
         }
         Log.i(TAG, "mItemsWidth is " + mItemsWidth);
-        mCellXPix = (axisWidth - mXAxisSurplus - mItemsWidth / 2) / mAdapter.getItemCount();
+
+        if (mHasArrows && mXAxisSurplus == 0) {
+            mCellXPix = (axisWidth - 20 - mItemsWidth / 2) / mAdapter.getItemCount();
+        } else {
+            mCellXPix = (axisWidth - mXAxisSurplus - mItemsWidth / 2) / mAdapter.getItemCount();
+        }
         Log.i(TAG, "mCellXPix is " + mCellXPix);
+
+        if (mItemsWidth / 2 > mCellXPix) {
+            try {
+                throw new DiagramException("item的宽度太大，超过了界限");
+            } catch (DiagramException e) {
+                e.printStackTrace();
+            }
+        }
         if (mHasArrows && mYAxisSurplus == 0) {
-            mCellYPix = (axisHeight - mYAxisSurplus - 20) / mAdapter.getYAxleBaseCellNum();
+            mCellYPix = (axisHeight - 20) / mAdapter.getYAxleBaseCellNum();
         } else {
             mCellYPix = (axisHeight - mYAxisSurplus) / mAdapter.getYAxleBaseCellNum();
         }
         mCellYSmallPix = mCellYPix / mAdapter.getYAxleBaseCellSegmentationNum();
 
         if (mAdapter.openRightYAxle()) {
+            mRightAxisX = mAxisX_end_X - mXAxisSurplus;
             if (mHasArrows && mYAxisSurplus == 0) {
-                mRightCellYPix = (axisHeight - mYAxisSurplus - 20) / mAdapter.getRightYAxleBaseCellNum();
+                mRightCellYPix = (axisHeight - 20) / mAdapter.getRightYAxleBaseCellNum();
             } else {
                 mRightCellYPix = (axisHeight - mYAxisSurplus) / mAdapter.getRightYAxleBaseCellNum();
             }
             mRightCellYSmallPix = mRightCellYPix / mAdapter.getRightYAxleBaseCellSegmentationNum();
         }
 
-        offsetX = mAdapter.getItemWidth(0) / 2;
-
+        offsetX = (mCellXPix - mItemsWidth / 2) / 2;
     }
 
 
@@ -249,8 +274,6 @@ public class DiagramView extends View {
     }
 
     private void drawAxis(Canvas canvas) throws Exception {
-        if (mAdapter == null)
-            return;
         mAxisPaint.setColor(mXAxisColor);
         canvas.drawLine(mAxis_x, mAxis_y, mAxisX_end_X, mAxis_y, mAxisPaint);//绘制x轴
         if (mHasArrows) {//绘制箭头
@@ -269,6 +292,10 @@ public class DiagramView extends View {
         mTextPaint.setTextSize(mXAxisTextSize);
         canvas.drawText("0", mPaddingLeft, mAxis_y + mTextPaint.getTextSize(), mTextPaint);
 
+        Log.i("PPPPPP", "drawAxis");
+
+        if (mAdapter == null)
+            return;
         drawYCell(canvas);
         if (mAdapter.getItemCount() > 0) {
             drawXCellAndItem(canvas, mAdapter);
@@ -372,17 +399,17 @@ public class DiagramView extends View {
         if (mAdapter.openRightYAxle()) {
             mAxisPaint.setColor(mRightYAxisColor);
             if (mYAxisVisible == VISIBLE) {
-                canvas.drawLine(mAxisX_end_X, mAxis_y, mAxisX_end_X, mAxisY_end_Y, mAxisPaint);
+                canvas.drawLine(mRightAxisX, mAxis_y, mRightAxisX, mAxisY_end_Y, mAxisPaint);
                 if (mHasArrows) {//绘制箭头
-                    canvas.drawLine(mAxisX_end_X, mAxisY_end_Y, mAxisX_end_X - 10, mAxisY_end_Y + 12, mAxisPaint);
-                    canvas.drawLine(mAxisX_end_X, mAxisY_end_Y, mAxisX_end_X + 10, mAxisY_end_Y + 12, mAxisPaint);
+                    canvas.drawLine(mRightAxisX, mAxisY_end_Y, mRightAxisX - 10, mAxisY_end_Y + 12, mAxisPaint);
+                    canvas.drawLine(mRightAxisX, mAxisY_end_Y, mRightAxisX + 10, mAxisY_end_Y + 12, mAxisPaint);
                 }
             }
             mTextPaint.setTextSize(mRightYAxisTextSize);
             mTextPaint.setColor(mRightYAxisTextColor);
             for (int i = 0; i < mAdapter.getRightYAxleBaseCellNum(); i++) {
-                canvas.drawLine(mAxisX_end_X, mAxis_y - (mRightCellYPix * (i + 1)), mAxisX_end_X - 10, mAxis_y - (mRightCellYPix * (i + 1)), mAxisPaint);
-                canvas.drawText(mAdapter.getRightYAxleBaseCellText(i), mAxisX_end_X + 10, mAxis_y - (mRightCellYPix * (i + 1)) + mTextPaint.getTextSize() / 2, mTextPaint);
+                canvas.drawLine(mRightAxisX, mAxis_y - (mRightCellYPix * (i + 1)), mRightAxisX - 10, mAxis_y - (mRightCellYPix * (i + 1)), mAxisPaint);
+                canvas.drawText(mAdapter.getRightYAxleBaseCellText(i), mRightAxisX + 10, mAxis_y - (mRightCellYPix * (i + 1)) + mTextPaint.getTextSize() / 2, mTextPaint);
             }
         }
     }
@@ -444,7 +471,6 @@ public class DiagramView extends View {
         public abstract int getYAxleBaseCellSegmentationNum();
 
         /**
-         *
          * @param position 根据position区分type组
          * @return item的组数的区分
          */
@@ -487,7 +513,8 @@ public class DiagramView extends View {
 
         /**
          * 每个竖状图的高度
-         * @param type 根据type区分竖状图组数
+         *
+         * @param type     根据type区分竖状图组数
          * @param position 每组的竖状图位置
          * @return 每组竖状图的高度
          */
@@ -496,6 +523,7 @@ public class DiagramView extends View {
 
         /**
          * 是否显示右侧轴
+         *
          * @return 是否显示右侧轴
          */
         @Override
@@ -505,6 +533,7 @@ public class DiagramView extends View {
 
         /**
          * 右侧轴的基本单元数
+         *
          * @return 右侧轴的基本单元数
          */
         @Override
@@ -514,6 +543,7 @@ public class DiagramView extends View {
 
         /**
          * 右侧轴的基本单元所代表的值
+         *
          * @return 右侧轴的基本单元所代表的值
          */
         @Override
@@ -522,7 +552,6 @@ public class DiagramView extends View {
         }
 
         /**
-         *
          * @param position 右侧基本单元的位置
          * @return 右侧基本单元对应的文字
          */
@@ -532,17 +561,16 @@ public class DiagramView extends View {
         }
 
         /**
-         *
          * @return 右侧基本单元再分的每小段的值
-         * @throws DiagramException 抛出异常
          */
         @Override
-        public int getRightYAxleSmallestCell() throws DiagramException {
-            return getRightYAxleBaseCell()/getRightYAxleBaseCellSegmentationNum();
+        public int getRightYAxleSmallestCell() {
+            return getRightYAxleBaseCell() / getRightYAxleBaseCellSegmentationNum();
         }
 
         /**
          * 右侧基本单元再分为几段
+         *
          * @return 右侧基本单元再分为几段
          */
         @Override
@@ -552,7 +580,8 @@ public class DiagramView extends View {
 
         /**
          * 根据type将数据分组，
-         * @param type item的type
+         *
+         * @param type     item的type
          * @param position 每组item对应的位置
          * @return 返回的是每组item的每个位置的值，画点用
          */
@@ -562,7 +591,6 @@ public class DiagramView extends View {
         }
 
         /**
-         *
          * @param type item的type
          * @return 根据item的type来分别设置线条和点的颜色
          */

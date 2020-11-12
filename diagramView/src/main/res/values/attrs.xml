@@ -5,8 +5,8 @@
         <attr name="paddingRight" format="dimension"/>
         <attr name="paddingTop" format="dimension"/>
         <attr name="paddingBottom" format="dimension"/>
-        <attr name="xAxisSurplus" format="float"/>
-        <attr name="yAxisSurplus" format="float"/>
+        <attr name="xAxisSurplus" format="dimension"/>
+        <attr name="yAxisSurplus" format="dimension"/>
         <attr name="hasArrows" format="boolean"/>
         <attr name="yAxisColor" format="color"/>
         <attr name="xAxisColor" format="color"/>
