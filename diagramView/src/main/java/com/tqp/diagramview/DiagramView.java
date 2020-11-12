@@ -166,6 +166,9 @@ public class DiagramView extends View {
         Log.i(TAG, "diagramWidth is " + diagramWidth);
         Log.i(TAG, "diagramHeight is " + diagramHeight);
 
+        if (mAdapter == null)
+            return;
+
         mTextPaint.setTextSize(mYAxisTextSize);
         @SuppressLint("DrawAllocation") Rect yRect = new Rect();
         String text = "";
