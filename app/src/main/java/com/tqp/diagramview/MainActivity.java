@@ -1,10 +1,8 @@
 package com.tqp.diagramview;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
-import com.tqp.diagramview.exception.DiagramException;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -532,7 +530,6 @@ public class MainActivity extends AppCompatActivity {
          * 对比的组数，
          * 如果你们只需要显示一组，你传入的参数是List<T>的话，你这里返回就写1，
          * 当然你也可以List<List<T>>，那下面就不用变了
-         * @return
          */
         @Override
         public int getTypeCount() {
@@ -541,7 +538,6 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * 每组数组的个数，这里实际上是x轴的单元数
-         * @return
          */
         @Override
         public int getItemCount() {
@@ -551,7 +547,6 @@ public class MainActivity extends AppCompatActivity {
         /**
          * y轴上标有数值的基准长度，上图中左侧的y轴每隔几小格就标记了一个文字，
          * 这里是返回有几个这样的标有文字的单元，那些没标数值的不要算，例如图1就是5格
-         * @return
          */
         @Override
         public int getYAxleBaseCellNum() {
@@ -560,7 +555,6 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * 每一标有数值的单元格所代表的数值
-         * @return
          */
         @Override
         public int getYAxleBaseCell() {
@@ -569,8 +563,6 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * 每一标有数值的单元格的数字所对应的文字
-         * @param position
-         * @return
          */
         @Override
         public String getYAxleBaseCellText(int position) {
@@ -579,7 +571,6 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * 每一个基准单元格又分为几格，如果不再分割则返回1
-         * @return
          */
         @Override
         public int getYAxleBaseCellSegmentationNum() {
@@ -589,8 +580,6 @@ public class MainActivity extends AppCompatActivity {
         /**
          * 你区分的type，实际上就是对比的每组数组的标识，
          * 这里目前我好像漏掉了没啥用，但不影响显示，以后会完善
-         * @param position
-         * @return
          */
         @Override
         public int getItemViewType(int position) {
@@ -599,8 +588,6 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * 按type区分，每一组的竖状图的颜色
-         * @param type
-         * @return
          */
         @Override
         public int getItemColor(int type) {
@@ -613,8 +600,6 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * x轴所标记的文字
-         * @param position
-         * @return
          */
         @Override
         public String getXAxisText(int position) {
@@ -623,8 +608,6 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * x轴，每一组的竖状图的宽度，可以通过type来设置，如果都是一样宽，那就不需要区分
-         * @param type
-         * @return
          */
         @Override
         public float getItemWidth(int type) {
@@ -633,9 +616,6 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * 按type区分，每一组的每一个x单元的竖状图的峰值，是有多高
-         * @param type
-         * @param position
-         * @return
          */
         @Override
         public float getItemHigh(int type, int position) {
@@ -645,7 +625,6 @@ public class MainActivity extends AppCompatActivity {
         /**
          * 这里是是否显示右侧的y轴，适用于画点连线的图，默认是false，
          * 这个方法不一定需要实现，如果启动右侧轴的话就实现，并返回true
-         * @return
          */
         @Override
         public boolean openRightYAxle() {
@@ -654,7 +633,6 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * 右侧轴的标有数值的基本单元分为几格
-         * @return
          */
         @Override
         public int getRightYAxleBaseCellNum() {
@@ -663,7 +641,6 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * 右侧轴的标有数值的每一个基本单元所代表的数值
-         * @return
          */
         @Override
         public int getRightYAxleBaseCell() {
@@ -672,7 +649,6 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * 右侧轴的标有数值的每一个基本单元对应的文字
-         * @return
          */
         @Override
         public String getRightYAxleBaseCellText(int position) {
@@ -681,7 +657,6 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * 右侧轴的标有数值的每一个基本单元是否再分，不分则返回1
-         * @return
          */
         @Override
         public int getRightYAxleBaseCellSegmentationNum() {
@@ -690,9 +665,6 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * 右侧轴标有数值的基本单元所对应的文字
-         * @param type
-         * @param position
-         * @return
          */
         @Override
         public float getRightCellValue(int type, int position) {
@@ -701,8 +673,6 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * 线形图根据type来区分颜色，如果只有一组那就没必要区分了
-         * @param type
-         * @return
          */
         @Override
         public int getRightItemColor(int type) {
