@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:orientation="vertical">
+
+        <com.tqp.diagramview.DiagramView
+            android:id="@+id/diagramView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:paddingLeft="@dimen/dp_10"
+            app:paddingRight="@dimen/dp_10"
+            app:paddingTop="@dimen/dp_10"
+            app:paddingBottom="@dimen/dp_10"
+            app:yAxisTextSize="20"
+            app:xAxisTextSize="20"
+            app:xAxisTextColor="@color/romance"
+            app:yAxisTextColor="@color/romance"
+            android:background="@color/lust"/>
+
+    </LinearLayout>
+
+</LinearLayout>

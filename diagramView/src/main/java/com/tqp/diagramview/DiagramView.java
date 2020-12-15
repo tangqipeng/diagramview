@@ -30,6 +30,7 @@ import java.util.List;
 public class DiagramView extends View {
     private final static String TAG = DiagramView.class.getName();
 
+    private int diagramWidth, diagramHeight;
     private final float mXAxisSurplus;//x轴最后留有的剩余长度
     private final float mYAxisSurplus;//y轴最后留有的剩余长度
     private final float mPaddingTop;//距上
@@ -168,12 +169,24 @@ public class DiagramView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        final int diagramWidth = MeasureSpec.getSize(widthMeasureSpec);
-        final int diagramHeight = MeasureSpec.getSize(heightMeasureSpec);
+        final int specWidth = MeasureSpec.getSize(widthMeasureSpec);
+        final int specHeight = MeasureSpec.getSize(heightMeasureSpec);
         Log.i(TAG, "diagramWidth is " + diagramWidth);
         Log.i(TAG, "diagramHeight is " + diagramHeight);
-
+        int specWMode = MeasureSpec.getMode(widthMeasureSpec);
+        if (specWMode == MeasureSpec.EXACTLY){
+            diagramWidth = specWidth;
+        } else if (specWMode == MeasureSpec.AT_MOST){
+            diagramWidth = specWidth;
+        }
+        int specHMode = MeasureSpec.getMode(widthMeasureSpec);
+        if (specHMode == MeasureSpec.EXACTLY){
+            diagramHeight = specHeight;
+        } else if (specHMode == MeasureSpec.AT_MOST){
+            diagramHeight = specHeight;
+        }
         Log.i("PPPPPP", "onMeasure()");
+        setMeasuredDimension(diagramWidth, diagramHeight);
 
         mAxis_x = mPaddingLeft + 10;
         mAxis_y = diagramHeight - mPaddingBottom - 10;
